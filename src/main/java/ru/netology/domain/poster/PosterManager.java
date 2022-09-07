@@ -2,6 +2,7 @@ package ru.netology.domain.poster;
 
 public class PosterManager {
     private PosterRepository repo;
+    
     private int limit;
 
     public PosterManager(PosterRepository repo, int limit) {
@@ -11,6 +12,7 @@ public class PosterManager {
 
     public void add(FilmPoster film) {
         repo.save(film);
+
     }
 
     public FilmPoster[] findAll() {
