@@ -1,6 +1,7 @@
 package ru.netology.domain.poster;
 
 public class PosterManager {
+    private String[] films = new String[0];
 
     private int limit;
 
@@ -11,8 +12,6 @@ public class PosterManager {
     public PosterManager(int limit) {
         this.limit = limit;
     }
-
-    private String[] films = new String[0];
 
     public void add(String film) {
         String[] tmp = new String[films.length + 1];
