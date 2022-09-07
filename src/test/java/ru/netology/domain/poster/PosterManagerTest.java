@@ -2,77 +2,38 @@ package ru.netology.domain.poster;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import static org.mockito.Mockito.*;
 
 public class PosterManagerTest {
 
+    PosterRepository repo = Mockito.mock(PosterRepository.class);
+    PosterManager manager = new PosterManager(repo, 3);
+
+    FilmPoster film1 = new FilmPoster(1, "Film 1");
+    FilmPoster film2 = new FilmPoster(2, "Film 2");
+    FilmPoster film3 = new FilmPoster(3, "Film 3");
+
     @Test
-    public void shouldAddFilm() {
-        PosterManager poster = new PosterManager();
+    public void shouldFindAll() {
+        FilmPoster[] films = { film1, film2, film3 };
+        doReturn(films).when(repo).findAll();
 
-        poster.add("Film 1");
-        poster.add("Film 2");
-        poster.add("Film 3");
-
-        String[] actual = poster.findAll();
-        String[] expected = {"Film 1", "Film 2", "Film 3"};
+        FilmPoster[] expected = {film1, film2, film3};
+        FilmPoster[] actual = manager.findAll();
 
         Assertions.assertArrayEquals(expected, actual);
-
     }
 
     @Test
     public void shouldFindLast() {
-        PosterManager poster = new PosterManager(5);
+        FilmPoster[] films = { film1, film2, film3 };
+        doReturn(films).when(repo).findAll();
 
-        poster.add("Film 1");
-        poster.add("Film 2");
-        poster.add("Film 3");
-        poster.add("Film 4");
-        poster.add("Film 5");
-        poster.add("Film 6");
-
-        String[] actual = poster.findLast();
-        String[] expected = {"Film 6", "Film 5", "Film 4", "Film 3", "Film 2"};
+        FilmPoster[] expected = {film3, film2, film1};
+        FilmPoster[] actual = manager.findLast();
 
         Assertions.assertArrayEquals(expected, actual);
     }
-
-    @Test
-    public void shouldFindLastIfFilmsAmountUnderLimit() {
-        PosterManager poster = new PosterManager(5);
-
-        poster.add("Film 1");
-        poster.add("Film 2");
-        poster.add("Film 3");
-
-        String[] actual = poster.findLast();
-        String[] expected = {"Film 3", "Film 2", "Film 1"};
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void shouldFindLastIfDefaultLimit() {
-        PosterManager poster = new PosterManager();
-
-        poster.add("Film 1");
-        poster.add("Film 2");
-        poster.add("Film 3");
-        poster.add("Film 4");
-        poster.add("Film 5");
-        poster.add("Film 6");
-        poster.add("Film 7");
-        poster.add("Film 8");
-        poster.add("Film 9");
-        poster.add("Film 10");
-        poster.add("Film 11");
-        poster.add("Film 12");
-
-        String[] actual = poster.findLast();
-        String[] expected = {"Film 12", "Film 11", "Film 10", "Film 9", "Film 8", "Film 7", "Film 6", "Film 5", "Film 4", "Film 3"};
-
-        Assertions.assertArrayEquals(expected, actual);
-    }
-
-
 }
